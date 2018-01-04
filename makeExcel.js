@@ -60,15 +60,15 @@ function addRows(sheet, degParams, degradation, images, prefix) {
 const images = [51, 52, 53, 54, 55];
 
 const prefix = 'blurred';
-const degradation = 'reg';
+const degradation = 'blind++';
 const degParams = [{
-  min: 3,
-  max: 23,
-  iteration: 11,
+  min: 5,
+  max: 5,
+  iteration: 1,
 }, {
-  min: 1,
-  max: 20,
-  iteration: 6,
+  min: 5,
+  max: 5,
+  iteration: 1,
 }, {
   min: 0,
   max: 0,
