@@ -3,9 +3,9 @@ const excelbuilder = require('msexcel-builder-protobi');
 let workbook;
 
 function makeSheet(params) {
-  const numCol = 4;
+  const numCol = 5;
   const numRow = (params[0].iteration * params[1].iteration * params[2].iteration) + 1;
-  workbook.createSheet('Sheet1', numCol, numRow);
+  return workbook.createSheet('Sheet1', numCol, numRow);
 }
 
 function getSheet(params) {
@@ -20,7 +20,7 @@ function getParam(min, max, totalIterations, currentIteration) {
 
 
 function addRows(sheet, params) {
-  let index = 0;
+  let index = 1;
   for (let k = 0; k < params[0].iteration; k++) {
     const param1 = getParam(params[0].min, params[0].max, params[0].iteration, k);
     for (let j = 0; j < params[1].iteration; j++) {
@@ -28,15 +28,17 @@ function addRows(sheet, params) {
       for (let l = 0; l < params[2].iteration; l++) {
         const param3 = getParam(params[2].min, params[2].max, params[2].iteration, l);
         let s = 1;
-        sheet.set(s++, index + 2, index); // id
-        sheet.set(s++, index + 2, 3); // Number of params
-        sheet.set(s++, index + 2, param1); // param1
-        sheet.set(s++, index + 2, param2); // param2
-        sheet.set(s++, index + 2, param3); // param3
+        sheet.set(s++, index + 1, index); // id
+        sheet.set(s++, index + 1, 3); // Number of params
+        sheet.set(s++, index + 1, param1); // param1
+        sheet.set(s++, index + 1, param2); // param2
+        sheet.set(s++, index + 1, param3); // param3
         index++;
       }
     }
   }
+
+  return index - 1;
 }
 
 function addHeading(s) {
@@ -46,8 +48,21 @@ function addHeading(s) {
   }
 }
 
-exports.generate = (params) => {
+function save(callback, n) {
+  // Save it
+  workbook.save((err) => {
+    if (err) {
+      throw err;
+    } else {
+      console.log('congratulations, your workbook created');
+      callback(null, n);
+    }
+  });
+}
+
+exports.generate = (params, callback) => {
   const sheet = getSheet(params);
   addHeading(sheet);
-  addRows(sheet, params);
+  const n = addRows(sheet, params);
+  save(callback, n);
 };

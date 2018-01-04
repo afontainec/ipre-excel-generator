@@ -57,17 +57,17 @@ function addRows(sheet, degParams, degradation, images, prefix) {
 }
 
 // const images = [1, 2, 3, 4, 5, 6, 7];
-const images = [51, 52, 53, 54, 55];
+const images = [56];
 
-const prefix = 'blurred';
-const degradation = 'blind++';
+const prefix = 'comparison';
+const degradation = 'nothing';
 const degParams = [{
-  min: 5,
-  max: 5,
-  iteration: 1,
+  min: 15,
+  max: 27,
+  iteration: 7,
 }, {
-  min: 5,
-  max: 5,
+  min: 0,
+  max: 0,
   iteration: 1,
 }, {
   min: 0,
